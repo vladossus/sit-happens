@@ -1,0 +1,45 @@
+.cartitem-card {
+    width: 300px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+}
+.cartitem-card:hover {
+    transform: translateY(-5px);
+}
+.cartitem-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.cartitem-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.cartitem-name {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+    color: #333;
+}
+.cartitem-description {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1rem;
+}
+.cartitem-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cartitem-price, .cartitem-quantity{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #222;
+}

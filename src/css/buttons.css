@@ -1,0 +1,39 @@
+.btn-text {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.btn-text:hover {
+    color: #8b5a2b;
+}
+/* primary button */
+.btn-primary {
+    background-color: #8b5a2b;
+    border: 1px solid #8b5a2b;
+    color: white;
+    padding: 0.8rem 1.8rem;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 600;
+}
+.btn-primary:hover {
+    background-color: #6d4620;
+}
+/* secondary button */
+.btn-secondary {
+    background: none;
+    border: 1px solid #8b5a2b;
+    color: #8b5a2b;
+    padding: 0.8rem 1.8rem;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.btn-secondary:hover {
+    background-color: #8b5a2b;
+    color: white;
+}

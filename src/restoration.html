@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sit Happens | Реставрация</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/restoration.css">
+    <link rel="stylesheet" href="css/product.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #333;
+        }
+        footer {
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+            background-color: #111;
+            margin-top: auto;
+        }
+        .footer-container {
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            margin-top: 2.5rem;
+        }
+        .footer-column {
+            flex: 1;
+            padding: 0 1rem;
+        }
+        .footer-column h3 {
+            color: #8b5a2b;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        .footer-column p {
+            margin-bottom: 1rem;
+            color: #ccc;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- header -->
+    <header>
+        <img src="assets/logo.png" alt="SH" class="logo">      
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="restoration.html" style="color: #8b5a2b;">Реставрация</a></li>
+            </ul>
+        </nav>
+        
+        <div class="user-actions">
+            <!-- logged out -->
+            <div class="logged-out-only">
+                <button class="logout-button btn-secondary" onclick="LoginForm.show()">Войти</button>
+                <button class="signup-button btn-primary" onclick="RegisterForm.show()">Создать аккаунт</button>
+            </div>
+            <!-- logged in -->
+            <div class="logged-in-only header-service">
+                <span>Привет, <strong style="color:#333" id="username">Пользователь</strong>!</span>
+                <button class="logout-button btn-secondary" onclick="Cart.clear();updateCartCounter();Auth.logout()">Выйти</button>
+
+                <a href="cart.html" class="cart-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- Page Banner -->
+        <div class="page-banner" style="background-image: url('assets/banner.jpg');">
+            <div class="page-banner-content">
+                <h1>Реставрация мебели</h1>
+                <p>Дайте вашей мебели новую жизнь с Sit Happens.</p>
+            </div>
+        </div>
+        
+        <!-- Restoration Form -->
+        <div class="form-container">
+            <div class="form-intro">
+                <h2>Заявка на реставрацию</h2>
+                <p>Пожалуйста заполните форму ниже соответствующей информацией. Наши эксперты проверят ее и свяжутся с вами для дальнейшей работы.</p>
+            </div>
+            
+            <form id="restoration-form">
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Личная информация</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Полное имя *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Электронная почта *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Номер телефона *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="preferred-contact">Как с вами связаться *</label>
+                            <select id="preferred-contact" name="preferred-contact" required>
+                                <option value="">-- Выбрать --</option>
+                                <option value="email">Эл. Почта</option>
+                                <option value="phone">Телефон</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Furniture Information -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Информация мебели</h3>
+                    <div class="form-group">
+                        <label for="furniture-type">Тип мебели *</label>
+                        <select id="furniture-type" name="furniture-type" required>
+                            <option value="">-- Выбрать --</option>
+                            <option value="table">Стол</option>
+                            <option value="chair">Стул</option>
+                            <option value="sofa">Кресло</option>
+                            <option value="cabinet">Диван</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="other-type-container" style="display: none;">
+                        <label for="other-type">Please Specify Furniture Type *</label>
+                        <input type="text" id="other-type" name="other-type">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="material">Основной материал *</label>
+                            <select id="material" name="material" required>
+                                <option value="">-- Выбрать --</option>
+                                <option value="oak">Дуб</option>
+                                <option value="pine">Береза</option>
+                                <option value="maple">Клен</option>
+                                <option value="walnut">Вишня</option>
+                                <option value="mahogany">Метал</option>
+                                <option value="cherry">Смешанное</option>
+                                <option value="unknown">Другое дерево</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Примерный возраст</label>
+                            <input type="text" id="age" name="age" placeholder="e.g., 50 лет, 1970-х, итп.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dimensions">Размеры </label>
+                        <input type="text" id="dimensions" name="dimensions" placeholder='e.g., 36"Ш x 24"Г x 30"В'>
+                    </div>
+                </div>
+                
+                <!-- Service Needs -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Вид реставрации</h3>
+                    <div class="form-group">
+                        <label>Выберите нужные виды *</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="refinishing"> Перекрытие (снятие и покрытие новым лаком)
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="repair"> Починка повреждения
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="hardware"> Замена деталей
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="color-change"> Смена цвета
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="assessment"> Не уверен (помогите)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="expectations">Состояние мебели</label>
+                        <textarea id="expectations" name="expectations" placeholder="Пожалуйста, опишите состояние мебели и ваши ожидания от реставрации."></textarea>
+                    </div>
+                </div>
+                
+                <!-- Additional Information -->
+                <div class="form-section">
+                    <h3 class="form-section-title">Дополнительная информация</h3>
+                    <div class="form-group">
+                        <label for="timeline">Сроки работ</label>
+                        <select id="timeline" name="timeline">
+                            <option value="">-- Выбрать --</option>
+                            <option value="urgent">Срочные (1-2 недели)</option>
+                            <option value="standard">Стандартные (3-4 недели)</option>
+                            <option value="flexible">Гибкие (5+ недель)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">Бюджет</label>
+                        <select id="budget" name="budget">
+                            <option value="">-- Выбрать --</option>
+                            <option value="under-500">До 5000 с</option>
+                            <option value="500-1000">5000 с - 10,000 с</option>
+                            <option value="1000-2000">10,000 с - 20,000 с</option>
+                            <option value="over-2000">Более 20,000 с</option>
+                            <option value="unsure">Не уверен</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="additional-notes">Комментарий к заявке</label>
+                        <textarea id="additional-notes" name="additional-notes" placeholder="Что-то еще, что мы должны знать?"></textarea>
+                    </div>
+                </div> 
+                <!-- Terms and Submission -->
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="terms" required>
+                        Я осознаю что этот сайт является мокапом и в реальности никакую мебель мне не починят. *
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn">Отправить запрос на реставрацию</button>
+            </form>
+        </div>
+    </main>
+    <!-- scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/catalog.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3>Наши контакты</h3>
+            <p><strong>Address:</strong> 123 ул. Папугов, Богемское Королевство</p>
+            <p><strong>Phone:</strong> (228) 666-6969</p>
+            <p><strong>Email:</strong> pepukcoder@gmail.com</p>
+        </div>
+        <div class="footer-column">
+            <h3>Информация</h3>
+            <p>PPgram Meme Team специализируется на разработке бесполезных сайтов, наполненных бредовым контентом.</p>
+            <p class="copyright">&copy; 2025 PPgram Meme Team. Все права не защищены.</p>
+        </div>
+    </div>
+</footer>
+</html>
